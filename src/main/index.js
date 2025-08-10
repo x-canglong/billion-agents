@@ -19,9 +19,12 @@ async function createWindow() {
       webPreferences: {
         preload: join(__dirname, '../preload/index.js'),
         sandbox: false,
-        nodeIntegration: false,
-        contextIsolation: true,
-        webSecurity: !is.dev
+        autoplayPolicy: 'no-user-gesture-required',
+        nodeIntegration: true,
+        contextIsolation: false,
+        webSecurity: false,
+        allowRunningInsecureContent: true,
+        devTools: true  // 明确启用开发者工具
       }
     })
 
@@ -104,15 +107,12 @@ app.whenReady().then(async () => {
     // 初始化日志系统
     await initLogger()
 
+    // 确保开发者工具可以在生产环境中使用
+    app.commandLine.appendSwitch('enable-devtools', 'true')
+    app.commandLine.appendSwitch('disable-web-security')
+    
     // Set app user model id for windows
     electronApp.setAppUserModelId('com.electron')
-
-    // Default open or close DevTools by F12 in development
-    // and ignore CommandOrControl + R in production.
-    // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
-    app.on('browser-window-created', (_, window) => {
-      optimizer.watchWindowShortcuts(window)
-    })
 
     // IPC test
     ipcMain.on('ping', () => console.log('pong'))

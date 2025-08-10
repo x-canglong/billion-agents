@@ -83,12 +83,13 @@ export default defineConfig({
         dirs: ['./src/components/'],
         resolvers: [ElementPlusResolver({ importStyle: false })],
         dts: './src/components.d.ts'
+      }),
+      inject({
+        _: 'lodash',
+        dayjs: 'dayjs',
+        Cookies: 'js-cookie',
+        include: ['src/**/*.vue', 'src/**/*.js']
       })
-      // inject({
-      //   _: 'lodash',
-      //   dayjs: 'dayjs',
-      //   Cookies: 'js-cookie'
-      // })
     ]
   }
 })

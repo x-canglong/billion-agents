@@ -27,7 +27,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const access_token = Cookies.get(ACCESS_TOKEN)
+    const access_token = ls.get(ACCESS_TOKEN)
     if (access_token) {
       config.headers.Authorization = 'Bearer ' + access_token
     }
@@ -82,7 +82,7 @@ instance.interceptors.response.use(
 
       try {
         await refreshToken()
-        const newAccessToken = Cookies.get(ACCESS_TOKEN)
+        const newAccessToken = ls.get(ACCESS_TOKEN)
         
         // 处理队列中的请求
         processQueue(null, newAccessToken)
@@ -96,8 +96,8 @@ instance.interceptors.response.use(
         processQueue(error, null)
         
         // 清除token并跳转到登录页
-        Cookies.remove(ACCESS_TOKEN)
-        Cookies.remove(REFRESH_TOKEN)
+        ls.remove(ACCESS_TOKEN)
+        ls.remove(REFRESH_TOKEN)
         router.replace('/login')
         
         return Promise.reject(error)

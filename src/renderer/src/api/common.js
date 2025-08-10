@@ -45,7 +45,7 @@ export async function refreshToken () {
     throw new Error('Token is already being refreshed');
   }
   isRefreshing = true;
-  const refresh_token = Cookies.get(REFRESH_TOKEN)
+  const refresh_token = ls.get(REFRESH_TOKEN)
   if (refresh_token) {
     try {
       const response = await axios.post(
@@ -60,8 +60,8 @@ export async function refreshToken () {
       )
       console.log('response', response)
       if (response?.status === 200) {
-        Cookies.set(ACCESS_TOKEN, response?.data.access_token);
-        Cookies.set(REFRESH_TOKEN, response?.data.refresh_token);
+        ls.set(ACCESS_TOKEN, response?.data.access_token);
+        ls.set(REFRESH_TOKEN, response?.data.refresh_token);
       }
     } catch (error) {
       ElMessage.error(i18n.global.t('login.sessionExpired'));

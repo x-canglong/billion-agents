@@ -102,8 +102,8 @@ const handleLogin = async () => {
         const expires = rememberMe.value ? 7 : 1 // 记住我选中时保存7天，否则1天
 
         // 保存token，设置过期时间
-        Cookies.set(ACCESS_TOKEN, res.data.access_token, { expires: expires })
-        Cookies.set(REFRESH_TOKEN, res.data.refresh_token, { expires: expires })
+        ls.set(ACCESS_TOKEN, res.data.access_token, { expires: expires })
+        ls.set(REFRESH_TOKEN, res.data.refresh_token, { expires: expires })
         // 如果记住我被选中，保存用户名和密码到localStorage
         if (rememberMe.value) {
           ls.set(

@@ -14,7 +14,7 @@
     "build:prod": "electron-vite build --mode production",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build:prod && electron-builder --dir",
-    "build:win": "npm run build && electron-builder --win",
+    "build:win": "npm run build:prod && electron-builder --win",
     "build:mac": "npm run build:prod && electron-builder --mac",
     "build:linux": "npm run build:prod && electron-builder --linux"
   },

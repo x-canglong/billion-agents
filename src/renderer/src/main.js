@@ -2,7 +2,7 @@
 import './utils/polyfills.js'
 
 // 确保全局注入的变量在打包后也能正常工作
-import './utils/globalInject.js'
+// import './utils/globalInject.js'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'

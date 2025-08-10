@@ -42,7 +42,6 @@ function registerShortcuts() {
 
     // 清空缓存并重新加载
     mainWindow.webContents.reloadIgnoringCache()
-    console.log('页面已强制刷新（缓存已清空）')
   })
 
   // F11: 切换最大化/默认窗口
@@ -67,11 +66,32 @@ function registerShortcuts() {
     }
   })
 
-  console.log('快捷键已注册：')
-  console.log('- F1: 切换显示/隐藏窗口')
-  console.log('- F5: 强制刷新页面（清空缓存）')
-  console.log('- F11: 切换最大化/默认窗口')
-  console.log('- F12: 切换显示/隐藏开发者控制台')
+  // Ctrl+F12: 切换显示/隐藏开发者控制台 (备用快捷键)
+  globalShortcut.register('CommandOrControl+F12', () => {
+    if (!mainWindow) {
+      console.log('Ctrl+F12: mainWindow 不可用')
+      return
+    }
+    
+    try {
+      const isOpened = mainWindow.webContents.isDevToolsOpened()
+      
+      if (isOpened) {
+        mainWindow.webContents.closeDevTools()
+      } else {
+        mainWindow.webContents.openDevTools({ mode: 'detach' })
+      }
+    } catch (error) {
+      console.error('Ctrl+F12: 操作失败 -', error.message)
+      // 简单的备用方案
+      try {
+        mainWindow.webContents.toggleDevTools()
+        console.log('Ctrl+F12: 使用 toggleDevTools 成功')
+      } catch (fallbackError) {
+        console.error('Ctrl+F12: 备用方案也失败 -', fallbackError.message)
+      }
+    }
+  })
 }
 
 /**
@@ -82,6 +102,7 @@ export function unregisterShortcuts() {
   globalShortcut.unregister('F5')
   globalShortcut.unregister('F11')
   globalShortcut.unregister('F12')
+  globalShortcut.unregister('CommandOrControl+F12')
   console.log('所有快捷键已注销')
 }
 
@@ -104,5 +125,5 @@ export function isShortcutRegistered(accelerator) {
  * 获取所有已注册的快捷键
  */
 export function getRegisteredShortcuts() {
-  return ['F1', 'F5', 'F11', 'F12'].filter((key) => globalShortcut.isRegistered(key))
+  return ['F1', 'F5', 'F11', 'F12', 'CommandOrControl+F12'].filter((key) => globalShortcut.isRegistered(key))
 }

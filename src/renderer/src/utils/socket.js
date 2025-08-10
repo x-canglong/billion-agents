@@ -16,7 +16,7 @@ const initSocket = () => {
     ls.set(DEVICE_ID, deviceId)
   }
   // 只有在使用 WebSocket 时才初始化
-  if (useWebSocket && Cookies.get(ACCESS_TOKEN) && store.userInfo.id) {
+  if (useWebSocket && ls.get(ACCESS_TOKEN) && store.userInfo.id) {
     // 如果已存在连接，先断开
     if (socket) {
       socket.disconnect()
@@ -47,7 +47,7 @@ const initSocket = () => {
         transportOptions: {
           polling: {
             extraHeaders: {
-              Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN)}`
+              Authorization: `Bearer ${ls.get(ACCESS_TOKEN)}`
             }
           }
         }
@@ -145,8 +145,8 @@ const initSocket = () => {
         ss.remove(RECONNECT_FAILED_COUNT)
         
         // 清除认证信息
-        Cookies.remove(ACCESS_TOKEN)
-        Cookies.remove(REFRESH_TOKEN)
+        ls.remove(ACCESS_TOKEN)
+        ls.remove(REFRESH_TOKEN)
         ls.remove(USER_INFO)
         
         // 跳转到登录页

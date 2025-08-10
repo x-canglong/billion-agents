@@ -26,7 +26,7 @@ export function getUrlParam(name) {
  * 获取token
  */
 export function getToken() {
-  return Cookies.get(ACCESS_TOKEN)
+  return ls.get(ACCESS_TOKEN)
 }
 
 /**
