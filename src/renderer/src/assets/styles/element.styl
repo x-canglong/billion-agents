@@ -1,0 +1,49 @@
+.el-table.custom-table
+  .el-table__header
+    th.el-table__cell
+      background-color #F1F1F1
+
+    .cell
+      color #878787
+      font-family 'Source Han Sans CN'
+      font-weight 500
+      font-size 15px
+
+  .el-table__body
+    td.el-table__cell
+      font-family Source Han Sans CN
+      font-weight 400
+      font-size 14px
+      color #454545
+      border-right none
+
+  .el-table__expanded-cell
+    padding-top 0px
+
+  &::before
+    height 0
+
+  &.el-table--border::after
+    width 0
+
+  .el-table__border-left-patch
+    width 0
+
+  .el-table__inner-wrapper:before, .el-table__inner-wrapper:after
+    height 0
+
+.el-table
+  .payment-amount-scale
+    display inline-block
+    width 48px
+
+.el-table.count-foot-table
+  .el-table__footer
+    .cell
+      .summary-val
+        color #43AFFD
+        display inline-block
+        margin-left 10px
+// .el-button
+//   .el-icon
+//     margin-right 0.25rem
